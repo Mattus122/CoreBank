@@ -4,6 +4,7 @@ import com.example.corebank.dto.RegisterRequest;
 import com.example.corebank.exception.AgeException;
 import com.example.corebank.model.User;
 import com.example.corebank.service.UserService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,7 +26,7 @@ public class UserController {
 
     }
     @PostMapping("/users")
-    ResponseEntity<String> addUser(@RequestBody RegisterRequest registerRequest) throws Exception {
+    ResponseEntity<String> addUser(@RequestBody @Valid RegisterRequest registerRequest) throws Exception {
         return userService.add(registerRequest);
     }
     @PutMapping("/users/{uuid}")

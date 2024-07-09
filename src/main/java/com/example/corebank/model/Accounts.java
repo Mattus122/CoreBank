@@ -7,6 +7,7 @@ import lombok.*;
 
 import java.math.BigDecimal;
 import java.util.Currency;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -18,7 +19,7 @@ import java.util.UUID;
 public class Accounts {
     @Id
     @Column(name = "account_id")
-    @GeneratedValue(strategy = GenerationType.UUID)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID account_id;
 
     @Column
@@ -30,12 +31,17 @@ public class Accounts {
     private BigDecimal balance ;
     @Column
     @NonNull
-    private Currency currency;
+    private String currency;
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private AccountStatus accountStatus;
-    @ManyToOne
-    @JoinColumn(referencedColumnName = "user_id")
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+//    @OneToOne 
+//    @JoinColumn(name = "user_id") with the help of this we can name our foreign key and gives info regarding column we are joining.
     private User user;
+    @OneToMany(mappedBy = "accounts" , fetch = FetchType.LAZY , cascade = CascadeType.ALL)
+    private List<Transaction> transaction;
 
 }

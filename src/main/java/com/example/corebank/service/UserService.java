@@ -35,9 +35,8 @@ public class UserService {
             throw new AgeException("Enter a valid age");
         }else{
             User user = User.builder().name(registerRequest.getName()).age(registerRequest.getAge()).build();
-            UUID uuid = user.getId();
-            var savedUser = userRepository.save(user);
-            return new ResponseEntity<>("User saved at ID : "+uuid , HttpStatus.CREATED);
+            User savedUser = userRepository.save(user);
+            return new ResponseEntity<>("User saved at ID : "+ savedUser.getId() , HttpStatus.CREATED);
         }
 
     }
